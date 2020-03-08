@@ -1,0 +1,41 @@
+<header class="header">
+    <h1><b>ToDoList</b></h1>
+</header>
+<div class="sideCardForm" *ngIf="response">
+
+    <div *ngFor="let card of cardsArray">
+
+        <mat-card class="card">
+            <button (click)="delete(card)" class="buttonRight" mat-flat-button >x</button>
+            <mat-card-header>
+                <mat-card-title>{{card.title}}</mat-card-title>
+                <mat-card-subtitle>{{card.creationDate}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{card.description}}</p>
+                <div *ngFor="let point of card.checkablePoints">
+
+                    <my-check [point]="point" ></my-check> {{point.text}}
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+
+</div>
+<form class="form">
+    <mat-form-field class="formField">
+        <mat-label>Название</mat-label>
+        <input matInput placeholder="Сделать дело" type="text" name="title" [(ngModel)]="title">
+    </mat-form-field>
+    <button mat-button class="buttonLeft" (click)="add()">Добавить подпункт</button>
+    <mat-form-field class="formField">
+        <mat-label>Описание</mat-label>
+        <input matInput placeholder="Какое дело" type="text" name="description" [(ngModel)]="description">
+    </mat-form-field>
+    <ng-template #container>
+    </ng-template>
+    <button class="buttonLeft" mat-flat-button (click)="send()">Создать</button>
+</form>
+
