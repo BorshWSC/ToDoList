@@ -9,6 +9,7 @@ import ru.tpu.msk30.todolist.repo.CardRepo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -25,8 +26,17 @@ public class CardController {
 
     @GetMapping
     public List<Card> list(){
-
-        return cardRepo.findAll();
+        List<Card> allCards = cardRepo.findAll();
+        Comparator<CheckablePoint> comparator = new Comparator<CheckablePoint>() {
+            @Override
+            public int compare(CheckablePoint o1, CheckablePoint o2) {
+                return o1.getId().compareTo(o2.getId());
+            }
+        };
+        for(Card card: allCards){
+            card.getCheckablePoints().sort(comparator);
+        }
+        return allCards;
 
     }
 
