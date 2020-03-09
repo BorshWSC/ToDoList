@@ -25,6 +25,10 @@ export class AppComponent {
     }
 
     ngOnInit(){
+        this.getCards()
+    }
+
+    getCards(){
         this.cardsArray = [];
         var that = this;
         this.http.get("http://localhost:8080/card")
@@ -63,7 +67,10 @@ export class AppComponent {
         return this.http.post<Card>("http://localhost:8080/card", serialized, options).subscribe((response)=>{
             this.response = response;
             console.log(this.response);
+            this.getCards()
+
         })
+
     }
 
     delete(card: Card){
@@ -81,7 +88,10 @@ export class AppComponent {
 
         return this.http.delete<Card>(url, options).subscribe((response)=>{
             console.log(response);
+            this.getCards()
         })
+
+
 
     }
 
